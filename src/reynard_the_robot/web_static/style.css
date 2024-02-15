@@ -1,0 +1,26 @@
+.reynard-canvas {
+    width: fit-content;
+    height: fit-content;
+    color: "grey";
+    border-width: 3px !important;
+    border-color: black !important;
+    border-style: solid !important;
+    display: block !important;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.output-outer {
+    padding:8px;
+    display: flex !important;
+    flex-direction: column-reverse;
+    width: 100% !important;
+    overflow: auto;
+    max-height:100% !important;
+}
+
+.output-line {
+    white-space: pre-line;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace!important;
+    display: block;
+}

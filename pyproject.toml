@@ -1,0 +1,28 @@
+[project]
+
+name = "reynard-the-robot"
+version = "0.1.0"
+description = "Reyndard the Robot Raconteur educational Robot"
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+authors = [
+    {name = "John Wason", email = "wason@wasontech.com"}
+]
+
+dependencies =[
+    "robotraconteur",
+    "aiohttp",
+    "python-socketio",
+    "drekar-launch-process",
+    "importlib-resources"
+]
+
+[build-system]
+build-backend = 'setuptools.build_meta'
+requires = [
+    'setuptools',
+    'toml',
+]
+
+[tool.setuptools.package-data]
+"reynard_the_robot.web_resources" = ["*.html", "*.js", "*.css", "*.csv"]

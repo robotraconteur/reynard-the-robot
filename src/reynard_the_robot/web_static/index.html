@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Reynard the Robot</title>
+  </head>
+<body class="bg-light p-2"></body>
+    <h1 class="text-center p-2">Reynard the Robot</h1>
+    <div class="reynard-canvas">
+        <canvas id="reynard-canvas" width="800" height="400"></canvas>
+    </div>
+    <div class="p-3">
+    <h3 class="text-center p-1">Talk</h3>
+    <div style="max-width: 600px;" class="m-auto d-block">
+        <div style="height:200px" class="text-light bg-dark rounded">
+        <div class="output-outer">
+            <div id="reynard-output">
+                <div class="output-line">Hello I'm Reynard!</div>
+            </div>
+        </div>
+        </div>
+        <div class="form-inline p-1 w-100">
+        <div class="row w-100">
+            <div class="col">
+            <input type="text" id="reynard-talk-input" class="form-control w-100" placeholder="Say something to Reynard!">
+            </div>
+            <button id="reynard-send-submit" class="btn btn-primary">Send</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/paper@0.12.17/dist/paper-full.min.js" integrity="sha256-hXkN7gPo0Z+lI4R/RlapXn3yZp8m37Skvd39gB83xhQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.4/client-dist/socket.io.js" integrity="sha256-hy11r5r1xxFpQ47dmB/YZ/Nbzqm8F6mAbyD+y3gi1IE=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
