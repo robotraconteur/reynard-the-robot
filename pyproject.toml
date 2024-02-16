@@ -14,7 +14,8 @@ dependencies =[
     "aiohttp",
     "python-socketio",
     "drekar-launch-process",
-    "importlib-resources"
+    "importlib-resources",
+    'blinker'
 ]
 
 [build-system]

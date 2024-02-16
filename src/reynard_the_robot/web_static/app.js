@@ -52,7 +52,6 @@ class ReynardRobot {
     this.reynard_link1 = reynard_link1;
     this.reynard_tool = reynard_tool;
     this.reynard_link2 = reynard_link2;
-    // reynard_group.rotate(20)
 
     socket.on('teleport', (data) => {
       this.teleport(data.x, data.y);
@@ -62,8 +61,17 @@ class ReynardRobot {
       this.arm(data.q1, data.q2, data.q3);
     });
 
+    socket.on('update', (data) => {
+      this.teleport(data.x, data.y);
+      this.arm(data.q1, data.q2, data.q3);
+    });
+
     socket.on('say', (text) => {
       this.reynard_output.append(`<div class="output-line">${text}</div>`);
+    });
+
+    socket.on('color', (color) => {
+      this.changeColor(color.r, color.g, color.b);
     });
   }
 
@@ -109,6 +117,14 @@ class ReynardRobot {
     setLinkPosition(this.reynard_link1, this.reynard_link2, reynard_kinematics.p1_c, reynard_kinematics.p2_c, -q2);
     setLinkPosition(this.reynard_link2, this.reynard_tool, reynard_kinematics.p2_c, reynard_kinematics.p3_c, -q3);
   }
+
+  changeColor(r, g, b) {
+    let color = new paper.Color(r, g, b);
+    let path12 = findChildByName(this.reynard_body, 'path1-2');
+    path12.fillColor = color;
+    let path13 = findChildByName(this.reynard_body, 'path1');
+    path13.fillColor = color;
+  }
 }
 
 async function loadSVGImage(group,url,position)
@@ -140,6 +156,23 @@ function setBodyPosition(group,body,p)
     // Get global body position
     let offset = group.localToGlobal(body.position).subtract(group.position);
     group.position = p.subtract(offset);
+}
+
+function findChildByName(item, name) {
+  if (item.name === name) {
+      return item;
+  }
+
+  if (item.children) {
+      for (let child of item.children) {
+          let found = findChildByName(child, name);
+          if (found) {
+              return found;
+          }
+      }
+  }
+
+  return null;
 }
 
 window.onload = async function() {
