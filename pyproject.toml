@@ -15,7 +15,8 @@ dependencies =[
     "python-socketio",
     "drekar-launch-process",
     "importlib-resources",
-    'blinker'
+    'blinker',
+    'requests'
 ]
 
 [build-system]
