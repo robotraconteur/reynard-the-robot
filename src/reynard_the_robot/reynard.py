@@ -22,7 +22,7 @@ reynard_kinematics = {
 
 
 class Reynard:
-    def __init__(self, host="localhost", port=25000):
+    def __init__(self, host="localhost", port=29201):
         self.app = web.Application()
         self.aio_lock = asyncio.Lock()
         self.socketio = socketio.AsyncServer(async_mode='aiohttp')
