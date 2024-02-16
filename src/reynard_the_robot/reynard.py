@@ -138,6 +138,7 @@ class Reynard:
 
     def start(self):
         self.thread = Thread(target=self._run)
+        self.thread.daemon = True
         self.thread.start()
         self._started.wait()
 
