@@ -37,6 +37,11 @@ print(response.json())
 # Set the color
 requests.post(base_url + "/color", json={"r": 1, "g": 0, "b": 0}).raise_for_status()
 
+time.sleep(1)
+
+# Reset the color
+requests.post(base_url + "/color", json={"r": 0.929, "g": 0.49, "b": 0.192}).raise_for_status()
+
 # Say something
 requests.post(base_url + "/say", json={"message": "Hello, World From HTTP!"}).raise_for_status()
 

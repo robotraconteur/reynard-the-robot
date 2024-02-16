@@ -43,7 +43,7 @@ time.sleep(1)
 reynard.drive_arm(0, 0, 0)
 
 
-# Set the color
+# Set the color to Red
 reynard.color = (1, 0, 0)
 
 # Read the color
@@ -51,5 +51,13 @@ print(f"Color: {reynard.color}")
 
 time.sleep(1)
 
-# Set the color
+# Set the color to Green
 reynard.color = (0, 1, 0)
+
+time.sleep(1)
+
+# Reset the color
+reynard.color = (0.929, 0.49, 0.192)
+
+# Say hello
+reynard.say("Hello, World From API!")
