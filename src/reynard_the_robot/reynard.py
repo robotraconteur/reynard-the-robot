@@ -52,14 +52,17 @@ class Reynard:
             path = request.match_info.get('path', 'index.html')
             return web.FileResponse(static_path / path)
 
+        self._register_api()
         self.app.router.add_get('/', serve)
         self.app.router.add_get('/{path:.*}', serve)
 
+        self._api_msg_queue = asyncio.Queue()
         self.socketio.on('new_message', self._new_message_cb)
+
 
     def _new_message_cb(self, sid, message):
         self._new_message.send(message)
-
+        self._api_msg_queue.put_nowait(message)
 
     async def aio_start(self):
         self._runner = web.AppRunner(self.app)
@@ -77,9 +80,9 @@ class Reynard:
                 self._q += self._q_vel*self._dt
                 self._q = np.clip(self._q, reynard_kinematics["q_bounds"][0], reynard_kinematics["q_bounds"][1])
                 t = time.perf_counter()
-                if t > self._vel_stop_time:
+                if t > self._vel_stop_time and self._vel_stop_time >= 0:
                     self._vel = np.array([0, 0], dtype=np.float64)
-                if t > self._q_vel_stop_time:
+                if t > self._q_vel_stop_time and self._q_vel_stop_time >= 0:
                     self._q_vel = np.array([0, 0, 0], dtype=np.float64)
                 if np.linalg.norm(self._last_update_pos - self._pos) > 2 or np.any(np.abs(self._last_update_q - self._q) > 2):
                     self._last_update_pos = np.copy(self._pos)
@@ -197,3 +200,94 @@ class Reynard:
     @property
     def new_message(self):
         return self._new_message
+    
+    def _register_api(self):
+        async def api_get_messages(request):
+            messages = []
+            while not self._api_msg_queue.empty():
+                messages.append(await self._api_msg_queue.get())
+            return web.json_response(messages)
+        
+        async def api_post_teleport(request):
+            json = await request.json()
+            x = json["x"]
+            y = json["y"]
+            await self.aio_teleport(x, y)
+            return web.Response()
+        
+        async def api_post_say(request):
+            json = await request.json()
+            message = json["message"]
+            await self.aio_say(message)
+            return web.Response()
+        
+        async def api_post_arm(request):
+            json = await request.json()
+            q1 = json["q1"]
+            q2 = json["q2"]
+            q3 = json["q3"]
+            await self.aio_set_arm_position(q1, q2, q3)
+            return web.Response()
+        
+        async def api_post_drive_robot(request):
+            json = await request.json()
+            vel_x = json["vel_x"]
+            vel_y = json["vel_y"]
+            await self.aio_drive_robot(vel_x, vel_y)
+            return web.Response()
+        
+        async def api_post_drive_arm(request):
+            json = await request.json()
+            q1 = json["q1"]
+            q2 = json["q2"]
+            q3 = json["q3"]
+            await self.aio_drive_arm(q1, q2, q3)
+            return web.Response()
+        
+        async def api_post_color(request):
+            json = await request.json()
+            r = json["r"]
+            g = json["g"]
+            b = json["b"]
+            await self.aio_set_color(r, g, b)
+            return web.Response()
+        
+        async def api_get_state(request):
+            res = {
+                "x": self._pos[0],
+                "y": self._pos[1],
+                "q1": self._q[0],
+                "q2": self._q[1],
+                "q3": self._q[2],
+            }
+            return web.json_response(res)
+        
+        async def api_get_color(request):
+            res = {
+                "r": self._color[0],
+                "g": self._color[1],
+                "b": self._color[2]
+            }
+            return web.json_response(res)
+        
+        async def api_set_arm_position(request):
+            json = await request.json()
+            q1 = json["q1"]
+            q2 = json["q2"]
+            q3 = json["q3"]
+            await self.aio_set_arm_position(q1, q2, q3)
+            return web.Response()
+        
+        self.app.router.add_get('/api/messages', api_get_messages)
+        self.app.router.add_post('/api/teleport', api_post_teleport)
+        self.app.router.add_post('/api/say', api_post_say)
+        self.app.router.add_post('/api/arm', api_post_arm)
+        self.app.router.add_post('/api/drive_robot', api_post_drive_robot)
+        self.app.router.add_post('/api/drive_arm', api_post_drive_arm)
+        self.app.router.add_post('/api/color', api_post_color)
+        self.app.router.add_get('/api/state', api_get_state)
+        self.app.router.add_get('/api/color', api_get_color)
+        self.app.router.add_post('/api/set_arm_position', api_set_arm_position)
+
+
+
