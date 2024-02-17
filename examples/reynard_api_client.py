@@ -2,8 +2,8 @@ from reynard_the_robot import Reynard
 import time
 
 # Callback function for new_message signal
-def new_message(msg):
-    print(msg + " in callback")
+def new_message(_, message):
+    print(message + " in callback")
 
 # Create a Reynard object
 reynard = Reynard()

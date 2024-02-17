@@ -61,7 +61,7 @@ class Reynard:
 
 
     def _new_message_cb(self, sid, message):
-        self._new_message.send(message)
+        self._new_message.send(None, message=message)
         self._api_msg_queue.put_nowait(message)
 
     async def aio_start(self):
@@ -150,7 +150,7 @@ class Reynard:
         self._started.set()
         self._loop.run_forever()
 
-    def stop(self):
+    def close(self):
         if self._loop.is_running():
             self._loop.stop()
 
