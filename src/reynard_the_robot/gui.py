@@ -42,7 +42,7 @@ class ReynardGui:
         pass
 
     @staticmethod
-    def gui_available(self):
+    def gui_available():
         return _gui_available        
 
     def run_gui(self):
