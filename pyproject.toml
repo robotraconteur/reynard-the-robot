@@ -33,3 +33,7 @@ requires = [
 
 [tool.setuptools.package-data]
 "reynard_the_robot.web_static" = ["*.html", "*.js", "*.css", "*.csv", "*.svg", "*.ico", "*.png"]
+
+[project.urls]
+Documentation = "https://github.com/robotraconteur/reynard-the-robot"
+Source = "https://github.com/robotraconteur/reynard-the-robot"
