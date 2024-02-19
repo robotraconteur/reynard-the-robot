@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/figures/logo-header.svg">
+<p align="center"><img src="docs/figures/logo-header.svg"></p>
 
 # Reynard the Robot
 
