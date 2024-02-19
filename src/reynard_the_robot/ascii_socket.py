@@ -127,11 +127,17 @@ class ReynardAsciiSocketServer:
     
     def _run(self):
         while self._keepgoing:
-            s, _ = self._s_server.accept()
-            if not s:
-                return
-            c = ReynardAsciiSocketConnection(self._reynard, s)
-            self._connections.add(c)
+            try:
+                s, _ = self._s_server.accept()
+                if not s:
+                    return
+                c = ReynardAsciiSocketConnection(self._reynard, s)
+                self._connections.add(c)
+            except Exception:
+                if not self._keepgoing:
+                    return
+                else:
+                    raise
 
     def close(self):
         self._keepgoing = False
