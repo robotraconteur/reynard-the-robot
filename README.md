@@ -95,14 +95,14 @@ Available options:
 
 Here is the markdown documentation for the arguments:
 
-- `--headless`: Run Reynard in headless mode (no GUI)
-- `--disable-robotraconteur`: Disable Robot Raconteur service
-- `--disable-ascii-socket`: Disable ASCII socket server
-- `--http-public`: Use public IP for HTTP socket server. If omitted, only localhost connections are accepted
-- `--http-port`: Port for HTTP socket server. Default value is 29201
-- `--ascii-socket-public`: Use public IP for ASCII socket server. If omitted, only localhost connections are accepted
-- `--ascii-socket-port`: Port for ASCII socket server. Default value is 29202
-- `--quiet`: Suppress output
+- `--headless` - Run Reynard in headless mode (no GUI)
+- `--disable-robotraconteur` - Disable Robot Raconteur service
+- `--disable-ascii-socket` - Disable ASCII socket server
+- `--http-public` - Use public IP for HTTP socket server. If omitted, only localhost connections are accepted
+- `--http-port=` - Port for HTTP socket server. Default value is 29201
+- `--ascii-socket-public` - Use public IP for ASCII socket server. If omitted, only localhost connections are accepted
+- `--ascii-socket-port=` - Port for ASCII socket server. Default value is 29202
+- `--quiet` - Suppress output
 
 Standard Robot Raconteur command line options can also be used. See 
 https://github.com/robotraconteur/robotraconteur/wiki/Command-Line-Options
