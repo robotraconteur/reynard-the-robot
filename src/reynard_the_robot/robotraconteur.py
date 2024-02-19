@@ -138,9 +138,16 @@ class ReynardRobotRaconteurService:
 
         self._node_setup = RR.ServerNodeSetup("experimental.reynard_the_robot", 29200, node = self._node, argv=argv)
 
-        self._node.RegisterService("reynard", "experimental.reynard_the_robot.Reynard", self._obj)
+        self._ctx = self._node.RegisterService("reynard", "experimental.reynard_the_robot.Reynard", self._obj)
 
     def close(self):
         self._node_setup.close()
+
+    def print_info(self):
+        print("Robot Raconteur service connection URLs:")
+        for conn in self._ctx.GetCandidateConnectionURLs():
+            print(f"    {conn}")
+        print()
+        print("Use the Robot Raconteur service browser to help find the service on a network. See: https://github.com/robotraconteur/RobotRaconteur_ServiceBrowser")
 
 
