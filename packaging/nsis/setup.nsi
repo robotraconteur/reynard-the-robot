@@ -1,6 +1,8 @@
-!define VERSIONMAJOR 0
-!define VERSIONMINOR 1
-!define VERSIONBUILD 0
+; !define VERSIONMAJOR 0
+; !define VERSIONMINOR 1
+; !define VERSIONBUILD 0
+
+!searchparse /file ../../pyproject.toml 'version = "' VERSIONMAJOR '.' VERSIONMINOR '.' VERSIONBUILD '"'
 
 !define APPNAME "Reynard the Robot"
 !define COMPANYNAME "Robot Raconteur"
