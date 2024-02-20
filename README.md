@@ -45,13 +45,33 @@ https://github.com/johnwason/reynard_the_robot_ros and https://github.com/johnwa
 
 ## Installation
 
-### Installers for Windows and Mac OS
+### Installer for Windows
 
-Reynard the Robot is available as installers for Windows and Mac OS. See 
+Reynard the Robot is available as an installer for Windows. See 
 https://github.com/robotraconteur/reynard-the-robot/releases for the current release. Download the appropriate file,
 and install as normal. These installers use the PySide6 based viewer. Shortcut icons are created
-under the "Robot Raconteur" group on Windows. If headless mode or other advanced
+under the "Robot Raconteur" group on Windows. Windows may raise security warnings. If these are a problem,
+use the `pip` method below.
+
+If headless mode or other advanced
 options are required, use the `pip` method.
+
+### Mac OS
+
+The pyside6 based viewer is not currently working on Mac OS. Use the `--headless` mode an open
+a web browser to `http://localhost:29201`
+
+```
+python3 -m pip install --user reynard-the-robot
+```
+
+To run, use:
+
+```
+python3 -m reynard_the_robot --headless
+```
+
+Open a browser to http://localhost:29201
 
 ### Python Pip
 
