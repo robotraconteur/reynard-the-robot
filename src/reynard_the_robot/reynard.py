@@ -22,6 +22,40 @@ reynard_kinematics = {
 
 
 class Reynard:
+    """
+    The Reynard class implements Reynard the Robot. Reynard the Robot is a simple two dimensional 5 degree of 
+    freedom cartoon robot. It is intended to be used as a simple target device for learning Robot Raconteur
+    and other robotics software.
+
+    Reynard the Robot is implemented as a simple web server using the aiohttp and python-socketio libraries. Reynard
+    can be controlled directly using the Python API, or through the other communication methods provided by the
+    Python package. Reynard the Robot provides the following interactions:
+
+    - teleport: Move Reynard to a new position instantly
+    - say: Make Reynard say a message
+    - drive_robot: Drive Reynard's base in the x and y directions at a given velocity
+    - set_arm_position: Set the position of Reynard's arm joints instantly
+    - drive_arm: Drive Reynard's arm joints at a given velocity
+    - arm_position: Get the current position of Reynard's arm joints
+    - robot_position: Get the current position of Reynard's base
+    - robot_velocity: Get the current velocity of Reynard's base
+    - arm_velocity: Get the current velocity of Reynard's arm joints
+    - time: Get the current simulation time in seconds
+    - color: Get or set the color of Reynard's body as an RGB tuple between 0 and 1
+    - new_message: Signal that is emitted when a new message is received from the API
+
+    The Reynard class can be used with AIO or with the standard Python threading model. When used with AIO, the
+    methods starting with ``aio_`` should be used. When used with the standard Python threading model, the methods
+    without ``aio_`` should be used.
+
+    The start or aio_start method must be called to start the Reynard server. The close method should be called
+    to stop the Reynard server.
+
+    :param host: The host to bind the Reynard server to. Default is localhost. Set to 0.0.0.0 to bind to all interfaces.
+    :type host: str
+    :param port: The port to bind the Reynard server to. Default is 29201.
+    :type port: int
+    """
     def __init__(self, host="localhost", port=29201):
         self.app = web.Application()
         self.aio_lock = asyncio.Lock()
@@ -65,6 +99,10 @@ class Reynard:
         self._api_msg_queue.put_nowait(message)
 
     async def aio_start(self):
+        """
+        AIO version of start. Must be called to start the Reynard server.
+        Use with await in an async function.
+        """
         self._runner = web.AppRunner(self.app)
         await self._runner.setup()
         self._site = web.TCPSite(self._runner, self._host, self._port)
@@ -92,6 +130,15 @@ class Reynard:
             await asyncio.sleep(self._dt)
 
     async def aio_teleport(self, x, y):
+        """
+        AIO version of teleport. Teleport Reynard to a new position instantly.
+        Use with await in an async function.
+
+        :param x: The x position to teleport Reynard to
+        :type x: float
+        :param y: The y position to teleport Reynard to
+        :type y: float
+        """
         x,y = np.clip([x, y], reynard_kinematics["bounds"][0], reynard_kinematics["bounds"][1])
         async with self.aio_lock:
             self._vel = np.array([0, 0], dtype=np.float64)
@@ -99,9 +146,27 @@ class Reynard:
             await self.socketio.emit('teleport', {'x': x, 'y': y})
 
     async def aio_say(self, message):
+        """
+        AIO version of say. Make Reynard say a message.
+        Use with await in an async function.
+
+        :param message: The message to say
+        :type message: str
+        """
         await self.socketio.emit('say', message)
 
     async def aio_set_arm_position(self, q1, q2, q3):
+        """
+        AIO version of set_arm_position. Set the position of Reynard's arm joints instantly.
+        Use with await in an async function.
+
+        :param q1: The position of the first arm joint in radians
+        :type q1: float
+        :param q2: The position of the second arm joint in radians
+        :type q2: float
+        :param q3: The position of the third arm joint in radians
+        :type q3: float
+        """
         q1,q2,q3 = np.clip([q1,q2,q3], reynard_kinematics["q_bounds"][0], reynard_kinematics["q_bounds"][1])
         async with self.aio_lock:
             self._q_vel = np.array([0, 0, 0], dtype=np.float64)
@@ -109,6 +174,20 @@ class Reynard:
             await self.socketio.emit('arm', {'q1': q1, 'q2': q2, 'q3': q3})
 
     async def aio_drive_robot(self, vel_x, vel_y, timeout=-1, wait=False):
+        """
+        AIO version of drive_robot. Drive Reynard's base in the x and y directions at a given velocity.
+        Use with await in an async function.
+
+        :param vel_x: The velocity in the x direction
+        :type vel_x: float
+        :param vel_y: The velocity in the y direction
+        :type vel_y: float
+        :param timeout: The time to drive Reynard at the given velocity. If timeout is greater than 0, Reynard will stop
+                        after the given time. If timeout is less than 0, Reynard will continue indefinitely. Default is -1.
+        :type timeout: float
+        :param wait: If wait is True, the function will wait until the timeout has expired before returning. 
+                     Default is False.
+        """
         vel_x, vel_y = np.clip([vel_x, vel_y], -reynard_kinematics["vel_max"], reynard_kinematics["vel_max"])
         async with self.aio_lock:
             self._vel = np.array([vel_x, vel_y], dtype=np.float64)
@@ -120,6 +199,17 @@ class Reynard:
             await asyncio.sleep(timeout)
 
     async def aio_drive_arm(self, q1, q2, q3, timeout=-1, wait=False):
+        """
+        AIO version of drive_arm. Drive Reynard's arm joints at a given angular velocity.
+        Use with await in an async function.
+
+        :param q1: The angular velocity of the first arm joint in radians per second
+        :type q1: float
+        :param q2: The angular velocity of the second arm joint in radians per second
+        :type q2: float
+        :param q3: The angular velocity of the third arm joint in radians per second
+        :type q3: float
+        """
         q1,q2,q3 = np.clip([q1,q2,q3], -reynard_kinematics["q_vel_max"], reynard_kinematics["q_vel_max"])
         async with self.aio_lock:
             self._q_vel = np.array([q1, q2, q3], dtype=np.float64)
@@ -131,12 +221,28 @@ class Reynard:
             await asyncio.sleep(timeout)
 
     async def aio_set_color(self, r, g, b):
+        """
+        "AIO version of property set color. Set the color of Reynard's body as an RGB tuple between 0 and 1.
+        Use with await in an async function.
+
+        :param r: The red component of the color between 0 and 1
+        :type r: float
+        :param g: The green component of the color between 0 and 1
+        :type g: float
+        :param b: The blue component of the color between 0 and 1
+        :type b: float
+        """
         r,g,b = np.clip([r,g,b], 0, 1.0)
         async with self.aio_lock:
             self._color = np.array([r, g, b], dtype=np.float64)
             await self.socketio.emit('color', {'r': r, 'g': g, 'b': b})
 
     def start(self):
+        """
+        Start the Reynard server. This synchronous method should be used with the standard Python threading model.
+        A thread will be created to run the server. If you are using AIO, use aio_start instead. The AIO version
+        will use the asyncio event loop to run the server instead of a thread.
+        """
         self.thread = Thread(target=self._run)
         self.thread.daemon = True
         self.thread.start()
@@ -151,47 +257,112 @@ class Reynard:
         self._loop.run_forever()
 
     def close(self):
+        """
+        Close the Reynard server. This synchronous method should be used with the standard Python threading model.
+        This is not needed when using AIO.
+        """
         if self._loop.is_running():
             self._loop.stop()
 
     def teleport(self, x, y):
+        """
+        Instantly move Reynard to a new position.
+
+        :param x: The x position to teleport Reynard to
+        :type x: float
+        :param y: The y position to teleport Reynard to
+        :type y: float
+        """
         asyncio.run_coroutine_threadsafe(self.aio_teleport(x, y), self._loop).result()
 
     def say(self, message):
+        """
+        Make Reynard say a message.
+
+        :param message: The message to say
+        :type message: str
+        """
         asyncio.run_coroutine_threadsafe(self.aio_say(message), self._loop).result()
 
     def set_arm_position(self, q1, q2, q3):
+        """
+        Instantly set the position of Reynard's arm joints.
+
+        :param q1: The position of the first arm joint in radians
+        :type q1: float
+        :param q2: The position of the second arm joint in radians
+        :type q2: float
+        :param q3: The position of the third arm joint in radians
+        :type q3: float
+        """
         asyncio.run_coroutine_threadsafe(self.aio_set_arm_position(q1, q2, q3), self._loop).result()
 
     def drive_robot(self, vel_x, vel_y, timeout = -1, wait = False):
+        """
+        Drive Reynard's base in the x and y directions at a given velocity.
+
+        :param vel_x: The velocity in the x direction
+        :type vel_x: float
+        :param vel_y: The velocity in the y direction
+        :type vel_y: float
+        """
         asyncio.run_coroutine_threadsafe(self.aio_drive_robot(vel_x, vel_y, timeout, wait), self._loop).result()
 
     def drive_arm(self, q1, q2, q3, timeout = -1, wait = False):
+        """
+        Drive Reynard's arm joints at a given angular velocity.
+
+        :param q1: The angular velocity of the first arm joint in radians per second
+        :type q1: float
+        :param q2: The angular velocity of the second arm joint in radians per second
+        :type q2: float
+        :param q3: The angular velocity of the third arm joint in radians per second
+        :type q3: float
+        """
         asyncio.run_coroutine_threadsafe(self.aio_drive_arm(q1, q2, q3, timeout, wait), self._loop).result()
        
 
     @property
     def arm_position(self):
+        """
+        Get the current position of Reynard's arm joints in radians.
+        """
         return self._q
     
     @property
     def robot_position(self):
+        """
+        Get the current position of Reynard's base.
+        """
         return self._pos
     
     @property
     def robot_velocity(self):
+        """
+        Get the current velocity of Reynard's base.
+        """
         return self._vel
     
     @property
     def arm_velocity(self):
+        """
+        Get the current velocity of Reynard's arm joints.
+        """
         return self._q_vel
     
     @property
     def time(self):
+        """
+        Get the current simulation time in seconds. The simulation time starts at 0 when the server is started.
+        """
         return time.perf_counter()
     
     @property
     def color(self):
+        """
+        Get or set the color of Reynard's body as an RGB tuple between 0 and 1. Use aio_set_color to set the color
+        when using AIO.
+        """
         return self._color
     
     @color.setter
@@ -200,6 +371,10 @@ class Reynard:
 
     @property
     def new_message(self):
+        """
+        Event for new messages received from the API. Connect to this event to receive new messages. This property
+        is a blinker signal. Use the connect method to connect to the signal.
+        """
         return self._new_message
     
     def _register_api(self):
