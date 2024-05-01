@@ -2,6 +2,8 @@
 
 # Reynard the Robot
 
+Documentation can be found at: [https://reynard-the-robot.readthedocs.io/](https://reynard-the-robot.readthedocs.io/)
+
 Reynard the Robot is a tool designed to help new users learn Robot Raconteur. It is designed to
 provide a simple experience like the classic "Turtle" application, but with a robotics spin. Reynard is
 a cartoon planar mobile robot with an attached articulated arm. He can be translated in X and Y in the plane,
@@ -133,7 +135,7 @@ https://github.com/robotraconteur/robotraconteur/wiki/Command-Line-Options
 Multiple client interfaces are provided. See the following pages for more information on each interface:
 
 - Robot Raconteur [docs/robotraconteur.md](docs/robotraconteur.md)
-- Python API [docs/python_api.md](docs/python_api.md)
+- Python API [https://reynard-the-robot.readthedocs.io/en/latest/api_reference.html](https://reynard-the-robot.readthedocs.io/en/latest/api_reference.html)
 - HTTP REST API [docs/http_rest.md](docs/http_rest.md)
 - Raw ASCII Socket [docs/socket.md](docs/socket.md)
 - ROS 1 and ROS 2 [docs/ros.md](docs/ros.md)
