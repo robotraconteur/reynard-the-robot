@@ -9,7 +9,12 @@ Welcome to Reynard the Robots's documentation!
    :caption: Contents:
 
    readme
-   reynard_the_robot/api_reference
+   examples/index
+   api_reference
+   http_rest
+   socket
+   Robot Raconteur API Reference<robotraconteur>
+   ROS Reference<ros>
 
 Indices and tables
 ==================
