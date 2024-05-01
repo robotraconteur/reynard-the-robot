@@ -5,6 +5,8 @@ import numpy as np
 _reynard_robdef = """
 service experimental.reynard_the_robot
 
+stdver 0.10
+
 struct ReynardState
     field double time
     field double[] robot_position
