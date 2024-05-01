@@ -27,6 +27,9 @@ class Reynard:
     freedom cartoon robot. It is intended to be used as a simple target device for learning Robot Raconteur
     and other robotics software.
 
+    The GUI interface is accessed using a standard web browser with the URL ``http://localhost:29201``. The
+    host and port can be changed when constructing the Reynard object using the ``host`` and ``port`` parameters.
+
     Reynard the Robot is implemented as a simple web server using the aiohttp and python-socketio libraries. Reynard
     can be controlled directly using the Python API, or through the other communication methods provided by the
     Python package. Reynard the Robot provides the following interactions:
@@ -134,9 +137,9 @@ class Reynard:
         AIO version of teleport. Teleport Reynard to a new position instantly.
         Use with await in an async function.
 
-        :param x: The x position to teleport Reynard to
+        :param x: The x position to teleport Reynard to in millimeters
         :type x: float
-        :param y: The y position to teleport Reynard to
+        :param y: The y position to teleport Reynard to in millimeters
         :type y: float
         """
         x,y = np.clip([x, y], reynard_kinematics["bounds"][0], reynard_kinematics["bounds"][1])
@@ -160,11 +163,11 @@ class Reynard:
         AIO version of set_arm_position. Set the position of Reynard's arm joints instantly.
         Use with await in an async function.
 
-        :param q1: The position of the first arm joint in radians
+        :param q1: The position of the first arm joint in degrees
         :type q1: float
-        :param q2: The position of the second arm joint in radians
+        :param q2: The position of the second arm joint in degrees
         :type q2: float
-        :param q3: The position of the third arm joint in radians
+        :param q3: The position of the third arm joint in degrees
         :type q3: float
         """
         q1,q2,q3 = np.clip([q1,q2,q3], reynard_kinematics["q_bounds"][0], reynard_kinematics["q_bounds"][1])
@@ -178,9 +181,9 @@ class Reynard:
         AIO version of drive_robot. Drive Reynard's base in the x and y directions at a given velocity.
         Use with await in an async function.
 
-        :param vel_x: The velocity in the x direction
+        :param vel_x: The velocity in the x direction in millimeters per second
         :type vel_x: float
-        :param vel_y: The velocity in the y direction
+        :param vel_y: The velocity in the y direction in millimeters per second
         :type vel_y: float
         :param timeout: The time to drive Reynard at the given velocity. If timeout is greater than 0, Reynard will stop
                         after the given time. If timeout is less than 0, Reynard will continue indefinitely. Default is -1.
@@ -203,11 +206,11 @@ class Reynard:
         AIO version of drive_arm. Drive Reynard's arm joints at a given angular velocity.
         Use with await in an async function.
 
-        :param q1: The angular velocity of the first arm joint in radians per second
+        :param q1: The angular velocity of the first arm joint in degrees per second
         :type q1: float
-        :param q2: The angular velocity of the second arm joint in radians per second
+        :param q2: The angular velocity of the second arm joint in degrees per second
         :type q2: float
-        :param q3: The angular velocity of the third arm joint in radians per second
+        :param q3: The angular velocity of the third arm joint in degrees per second
         :type q3: float
         """
         q1,q2,q3 = np.clip([q1,q2,q3], -reynard_kinematics["q_vel_max"], reynard_kinematics["q_vel_max"])
@@ -268,9 +271,9 @@ class Reynard:
         """
         Instantly move Reynard to a new position.
 
-        :param x: The x position to teleport Reynard to
+        :param x: The x position to teleport Reynard to in millimeters
         :type x: float
-        :param y: The y position to teleport Reynard to
+        :param y: The y position to teleport Reynard to in millimeters
         :type y: float
         """
         asyncio.run_coroutine_threadsafe(self.aio_teleport(x, y), self._loop).result()
@@ -288,11 +291,11 @@ class Reynard:
         """
         Instantly set the position of Reynard's arm joints.
 
-        :param q1: The position of the first arm joint in radians
+        :param q1: The position of the first arm joint in degrees
         :type q1: float
-        :param q2: The position of the second arm joint in radians
+        :param q2: The position of the second arm joint in degrees
         :type q2: float
-        :param q3: The position of the third arm joint in radians
+        :param q3: The position of the third arm joint in degrees
         :type q3: float
         """
         asyncio.run_coroutine_threadsafe(self.aio_set_arm_position(q1, q2, q3), self._loop).result()
@@ -301,10 +304,16 @@ class Reynard:
         """
         Drive Reynard's base in the x and y directions at a given velocity.
 
-        :param vel_x: The velocity in the x direction
+        :param vel_x: The velocity in the x direction in millimeters per second
         :type vel_x: float
-        :param vel_y: The velocity in the y direction
+        :param vel_y: The velocity in the y direction in millimeters per second
         :type vel_y: float
+        :param timeout: The time to drive Reynard at the given velocity. If timeout is greater than 0, Reynard will stop
+                        after the given time. If timeout is less than 0, Reynard will continue indefinitely. Default is -1.
+        :type timeout: float
+        :param wait: If wait is True, the function will wait until the timeout has expired before returning.
+                        Default is False.
+        :type wait: bool
         """
         asyncio.run_coroutine_threadsafe(self.aio_drive_robot(vel_x, vel_y, timeout, wait), self._loop).result()
 
@@ -312,12 +321,17 @@ class Reynard:
         """
         Drive Reynard's arm joints at a given angular velocity.
 
-        :param q1: The angular velocity of the first arm joint in radians per second
+        :param q1: The angular velocity of the first arm joint in degrees per second
         :type q1: float
-        :param q2: The angular velocity of the second arm joint in radians per second
+        :param q2: The angular velocity of the second arm joint in degrees per second
         :type q2: float
-        :param q3: The angular velocity of the third arm joint in radians per second
+        :param q3: The angular velocity of the third arm joint in degrees per second
         :type q3: float
+        :param timeout: The time to drive Reynard at the given velocity. If timeout is greater than 0, Reynard will stop
+                        after the given time. If timeout is less than 0, Reynard will continue indefinitely. Default is -1.
+        :type timeout: float
+        :param wait: If wait is True, the function will wait until the timeout has expired before returning.
+                        Default is False.
         """
         asyncio.run_coroutine_threadsafe(self.aio_drive_arm(q1, q2, q3, timeout, wait), self._loop).result()
        
@@ -325,7 +339,7 @@ class Reynard:
     @property
     def arm_position(self):
         """
-        Get the current position of Reynard's arm joints in radians.
+        Get the current position of Reynard's arm joints in degrees.
         """
         return self._q
     
