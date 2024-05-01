@@ -136,8 +136,10 @@ Multiple client interfaces are provided. See the following pages for more inform
 - Python API [docs/python_api.md](docs/python_api.md)
 - HTTP REST API [docs/http_rest.md](docs/http_rest.md)
 - Raw ASCII Socket [docs/socket.md](docs/socket.md)
-- ROS 1 https://github.com/johnwason/reynard_the_robot_ros
-- ROS 2 https://github.com/johnwason/reynard_the_robot_ros2
+- ROS 1 and ROS 2 [docs/ros.md](docs/ros.md)
+
+Note that the ROS 1 and ROS 2 interfaces require external packages to operate. See [docs/ros.md](docs/ros.md) 
+for more information.
 
 ## Client Examples
 
