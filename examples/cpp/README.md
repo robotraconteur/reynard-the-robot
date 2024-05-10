@@ -1,6 +1,6 @@
 # Reynard C++ Robot Raconteur Client Example
 
-This example demonstrates controlling Reynard using Java as a Robot Raconteur client.
+This example demonstrates controlling Reynard using C++ as a Robot Raconteur client.
 
 This example requires installing the appropriate C++ libraries based on the operating system. See
 https://github.com/robotraconteur/robotraconteur/blob/master/docs/common/installation.md for more information.
