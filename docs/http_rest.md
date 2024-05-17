@@ -110,6 +110,8 @@ Drive Reynard's base in the x and y directions at a given velocity.
 
 - `vel_x` (float): The x velocity in millimeters per second
 - `vel_y` (float): The y velocity in millimeters per second
+- `timeout` (float): The time in seconds to drive the robot (optional)
+- `wait` (bool): Wait for the robot to finish driving before returning (optional)
 
 
 #### Response
@@ -139,6 +141,8 @@ Drive Reynard's arm joints at a given angular velocity.
 - `q1` (float): The angular velocity of the first joint in degrees per second
 - `q2` (float): The angular velocity of the second joint in degrees per second
 - `q3` (float): The angular velocity of the third joint in degrees per second
+- `timeout` (float): The time in seconds to drive the robot (optional)
+- `wait` (bool): Wait for the robot to finish driving before returning (optional)
 
 #### Response
 
@@ -225,11 +229,17 @@ Get the current state of Reynard position and arm joints.
 
 #### Response
 
+- `time` (float): The time in seconds since Reynard was started
 - `x` (float): The x position in millimeters
 - `y` (float): The y position in millimeters
 - `q1` (float): The position of the first joint in degrees
 - `q2` (float): The position of the second joint in degrees
 - `q3` (float): The position of the third joint in degrees
+- `vel_x` (float): The x velocity in millimeters per second
+- `vel_y` (float): The y velocity in millimeters per second
+- `q1_vel` (float): The angular velocity of the first joint in degrees per second
+- `q2_vel` (float): The angular velocity of the second joint in degrees per second
+- `q3_vel` (float): The angular velocity of the third joint in degrees per second
 
 #### Example
 

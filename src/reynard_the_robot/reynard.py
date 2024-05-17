@@ -423,7 +423,9 @@ class Reynard:
             json = await request.json()
             vel_x = json["vel_x"]
             vel_y = json["vel_y"]
-            await self.aio_drive_robot(vel_x, vel_y)
+            timeout = float(json.get("timeout", -1))
+            wait = bool(json.get("wait", False))
+            await self.aio_drive_robot(vel_x, vel_y, timeout, wait)
             return web.Response()
         
         async def api_post_drive_arm(request):
@@ -431,7 +433,9 @@ class Reynard:
             q1 = json["q1"]
             q2 = json["q2"]
             q3 = json["q3"]
-            await self.aio_drive_arm(q1, q2, q3)
+            timeout = float(json.get("timeout", -1))
+            wait = bool(json.get("wait", False))
+            await self.aio_drive_arm(q1, q2, q3, timeout, wait)
             return web.Response()
         
         async def api_post_color(request):
@@ -444,11 +448,17 @@ class Reynard:
         
         async def api_get_state(request):
             res = {
+                "time": self.time,
                 "x": self._pos[0],
                 "y": self._pos[1],
                 "q1": self._q[0],
                 "q2": self._q[1],
                 "q3": self._q[2],
+                "vel_x": self._vel[0],
+                "vel_y": self._vel[1],
+                "vel_q1": self._q_vel[0],
+                "vel_q2": self._q_vel[1],
+                "vel_q3": self._q_vel[2]
             }
             return web.json_response(res)
         
