@@ -12,7 +12,7 @@ using the `x64-windows` triplet. On Ubuntu the `apt` packages are expected. On M
 On Windows, run:
 
 ```
-cmake -GNinja -DCMAKE_TOOLCHAIN_FILE=C:\ws\vcpkg_with_rr\scripts\buildsystems\vcpkg.cmake -S. -B build
+cmake -GNinja -DCMAKE_TOOLCHAIN_FILE=C:\ws\vcpkg\scripts\buildsystems\vcpkg.cmake -S. -B build
 cmake --build build
 ```
 
@@ -35,5 +35,5 @@ build\reynard_robotraconteur_client.exe
 On Ubuntu and Mac OS, run:
 
 ```
-./build/reynard_robotraconteur_client.exe
+./build/reynard_robotraconteur_client
 ```
