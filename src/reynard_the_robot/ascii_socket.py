@@ -56,17 +56,29 @@ class ReynardAsciiSocketConnection:
                     self._reynard.set_arm_position(q1, q2, q3)
                     ret = "OK\n"
                 elif s1[0] == "DRIVE":
-                    assert len(s1) == 3
+                    assert len(s1) >= 3
                     vel_x = float(s1[1])
                     vel_y = float(s1[2])
-                    self._reynard.drive_robot(vel_x, vel_y)
+                    timeout = -1
+                    if len(s1) >= 4:
+                        timeout = float(s1[3])
+                    wait = False
+                    if len(s1) >= 5:
+                        wait = bool(s1[4])
+                    self._reynard.drive_robot(vel_x, vel_y, timeout, wait)
                     ret = "OK\n"
                 elif s1[0] == "DRIVEARM":
-                    assert len(s1) == 4
+                    assert len(s1) >= 4
                     q1 = float(s1[1])
                     q2 = float(s1[2])
                     q3 = float(s1[3])
-                    self._reynard.drive_arm(q1, q2, q3)
+                    timeout = -1
+                    if len(s1) >= 5:
+                        timeout = float(s1[4])
+                    wait = False
+                    if len(s1) >= 6:
+                        wait = bool(s1[5])
+                    self._reynard.drive_arm(q1, q2, q3, timeout, wait)
                     ret = "OK\n"
                 elif s1[0] == "STATE":
                     assert len(s1) == 1

@@ -90,11 +90,15 @@ SETARM 100 -30 -70
 The `DRIVE` command is used to drive Reynard's base in the x and y directions at a given velocity.
 
 ```
-DRIVE <vel_x> <vel_y>
+DRIVE <vel_x> <vel_y> <timeout> <wait>
 ```
 
 - `vel_x` (float): The x velocity in millimeters per second
 - `vel_y` (float): The y velocity in millimeters per second
+- `timeout` (float): The time in seconds to drive the robot
+- `wait` (bool): If `1`, the command will block until the drive is complete. If `0`, the command will return immediately.
+
+`timeout` and `wait` are optional.
 
 Returns `OK` if successful.
 
@@ -109,12 +113,16 @@ DRIVE 500 -200
 The `DRIVEARM` command is used to drive Reynard's arm joints to a specified angular velocity.
 
 ```
-DRIVERARM <q1> <q2> <q3>
+DRIVERARM <q1> <q2> <q3> <timeout> <wait>
 ```
 
 - `q1` (float): The angular velocity of joint 1 in degrees per second
 - `q2` (float): The angular velocity of joint 2 in degrees per second
 - `q3` (float): The angular velocity of joint 3 in degrees per second
+- `timeout` (float): The time in seconds to drive the robot
+- `wait` (bool): If `1`, the command will block until the drive is complete. If `0`, the command will return immediately.
+
+`timeout` and `wait` are optional.
 
 Returns `OK` if successful.
 
