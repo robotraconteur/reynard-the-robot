@@ -88,4 +88,3 @@ while True:
     if msg_res_str_p[0] == "NOMESSAGE":
         break
     print(f"New message: {msg_res_str_p[1]}")
-

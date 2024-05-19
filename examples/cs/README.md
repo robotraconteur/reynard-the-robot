@@ -5,7 +5,7 @@ This example demonstrates controlling Reynard using C\# as a Robot Raconteur cli
 dotnet core 5.0 SDK or greater is required. See https://dotnet.microsoft.com/en-us/download . In this example,
 dotnet 6 is used.
 
-Platforms other than Windows require the native library to be installed. See 
+Platforms other than Windows require the native library to be installed. See
 https://github.com/robotraconteur/robotraconteur/blob/master/docs/common/installation.md
 
 ## Run Example

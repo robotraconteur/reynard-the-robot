@@ -7,6 +7,7 @@ from contextlib import suppress
 import shlex
 import queue
 
+
 class ReynardAsciiSocketConnection:
     def __init__(self, reynard, s):
         self._reynard = reynard
@@ -14,7 +15,7 @@ class ReynardAsciiSocketConnection:
         self._f = s.makefile(mode='rw')
 
         self._message_queue = queue.Queue(10)
-        
+
         self._reynard.new_message.connect(self._new_message)
 
         self._thread = threading.Thread(target=self._run)
@@ -29,19 +30,19 @@ class ReynardAsciiSocketConnection:
             l = None
             try:
                 l = self._f.readline()
-            except (ConnectionResetError,ConnectionAbortedError):
+            except (ConnectionResetError, ConnectionAbortedError):
                 return
             ret = None
             if l is None:
                 return
-            
+
             try:
                 s1 = shlex.split(l)
                 if s1[0] == "TELEPORT":
                     assert len(s1) == 3
                     x = float(s1[1])
                     y = float(s1[2])
-                    self._reynard.teleport(x,y)
+                    self._reynard.teleport(x, y)
                     ret = "OK\n"
                 elif s1[0] == "SAY":
                     assert len(s1) == 2
@@ -95,7 +96,7 @@ class ReynardAsciiSocketConnection:
                     r = float(s1[1])
                     g = float(s1[2])
                     b = float(s1[3])
-                    self._reynard.color = (r,g,b)
+                    self._reynard.color = (r, g, b)
                     ret = "OK\n"
                 elif s1[0] == "MESSAGE":
                     assert len(s1) == 1
@@ -107,7 +108,7 @@ class ReynardAsciiSocketConnection:
                         ret = f"MESSAGE \"{msg}\"\n"
                 else:
                     assert False, "Invalid command"
-                    
+
             except Exception as e:
                 ret = f"ERROR {repr(e)}\n"
 
@@ -116,11 +117,10 @@ class ReynardAsciiSocketConnection:
                 self._f.flush()
             except:
                 return
-    
-
 
     def close(self):
         self._s.close()
+
 
 class ReynardAsciiSocketServer:
     def __init__(self, reynard, host="localhost", port=29202):
@@ -130,13 +130,13 @@ class ReynardAsciiSocketServer:
         self._port = port
         self._connections = weakref.WeakSet()
 
-        self._s_server = socket.create_server((host,port))
+        self._s_server = socket.create_server((host, port))
         self._s_server.listen()
 
-        self._thread = threading.Thread(target = self._run)
+        self._thread = threading.Thread(target=self._run)
         self._thread.daemon = True
         self._thread.start()
-    
+
     def _run(self):
         while self._keepgoing:
             try:
@@ -159,4 +159,3 @@ class ReynardAsciiSocketServer:
         for s in connections:
             with suppress(Exception):
                 s.close()
-            

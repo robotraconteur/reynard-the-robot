@@ -7,6 +7,7 @@ import sys
 from .gui import ReynardGui
 import argparse
 
+
 def main():
 
     parser = argparse.ArgumentParser("reynard-the-robot")
@@ -41,13 +42,14 @@ def main():
                 print(f"ASCII socket server started on port {args.ascii_socket_port}")
                 print()
         if not args.disable_robotraconteur:
-            rr_server = ReynardRobotRaconteurService(reynard,sys.argv)
+            rr_server = ReynardRobotRaconteurService(reynard, sys.argv)
             if not args.quiet:
                 rr_server.print_info()
                 print()
         if args.gui:
             if not ReynardGui.gui_available():
-                raise Exception("GUI not available. Do not use --gui argument and use external web browser. Install pyside6 Python package to enable GUI.")
+                raise Exception(
+                    "GUI not available. Do not use --gui argument and use external web browser. Install pyside6 Python package to enable GUI.")
             gui = ReynardGui()
             gui.run_gui()
         else:
@@ -60,6 +62,7 @@ def main():
             ascii_server.close()
         if rr_server is not None:
             rr_server.close()
+
 
 if __name__ == "__main__":
     main()

@@ -39,6 +39,7 @@ object Reynard
 end
 """
 
+
 class ReynardImpl:
 
     def __init__(self, reynard, node=None):
@@ -49,7 +50,7 @@ class ReynardImpl:
 
         self._reynard = reynard
         self._lock = threading.Lock()
-        
+
         self._reynard_state_type = self._node.GetStructureType("experimental.reynard_the_robot.ReynardState")
 
         self.new_message = RR.EventHook()
@@ -62,7 +63,7 @@ class ReynardImpl:
         self._state_timer = self._node.CreateTimer(0.05, self._timer_cb, False)
         self._state_timer.Start()
 
-    def _new_message(self,_, message):
+    def _new_message(self, _, message):
         self.new_message.fire(message)
 
     def teleport(self, x, y):
@@ -70,9 +71,9 @@ class ReynardImpl:
             if x > 1 or x < -1 or y > 0.5 or y < -0.5:
                 raise RR.InvalidArgumentException("Teleport target position is out of range")
             # Convert from m to mm
-            x1 = x*1e3
-            y1 = y*1e3
-            self._reynard.teleport(x1,y1)
+            x1 = x * 1e3
+            y1 = y * 1e3
+            self._reynard.teleport(x1, y1)
 
     def setf_arm_position(self, q1, q2, q3):
         with self._lock:
@@ -84,14 +85,14 @@ class ReynardImpl:
 
     def getf_arm_position(self):
         return np.deg2rad(self._reynard.arm_position)
-    
+
     @property
     def robot_position(self):
-        return np.array(self._reynard.robot_position,dtype=np.float64)*1e-3
-    
+        return np.array(self._reynard.robot_position, dtype=np.float64) * 1e-3
+
     def drive_robot(self, vel_x, vel_y, timeout, wait):
-        vel_x_1 = vel_x*1e3
-        vel_y_1 = vel_y*1e3
+        vel_x_1 = vel_x * 1e3
+        vel_y_1 = vel_y * 1e3
         self._reynard.drive_robot(vel_x_1, vel_y_1, timeout, wait)
 
     def drive_arm(self, q1, q2, q3, timeout, wait):
@@ -108,22 +109,22 @@ class ReynardImpl:
     def color(self):
         with self._lock:
             return self._reynard.color
-        
+
     @color.setter
     def color(self, c):
         if len(c) != 3:
             raise RR.InvalidArgumentException("Expected an array with length of 3")
         if np.any(np.array(c) < 0) or np.any(np.array(c) > 1):
-            raise RR.InvalidArgumentException("Invalid color value")        
+            raise RR.InvalidArgumentException("Invalid color value")
         self._reynard.color = c
 
     def _timer_cb(self, evt):
         s = self._reynard_state_type()
         s.time = self._reynard.time
-        s.robot_position = np.array(self._reynard.robot_position,dtype=np.float64)
-        s.arm_position = np.array(self._reynard.arm_position,dtype=np.float64)
-        s.robot_velocity = np.array(self._reynard.robot_velocity,dtype=np.float64)
-        s.arm_velocity = np.array(self._reynard.arm_velocity,dtype=np.float64)
+        s.robot_position = np.array(self._reynard.robot_position, dtype=np.float64)
+        s.arm_position = np.array(self._reynard.arm_position, dtype=np.float64)
+        s.robot_velocity = np.array(self._reynard.robot_velocity, dtype=np.float64)
+        s.arm_velocity = np.array(self._reynard.arm_velocity, dtype=np.float64)
 
         self.state.OutValue = s
 
@@ -136,9 +137,9 @@ class ReynardRobotRaconteurService:
 
         self._node.RegisterServiceType(_reynard_robdef)
 
-        self._obj = ReynardImpl(reynard,self._node)
+        self._obj = ReynardImpl(reynard, self._node)
 
-        self._node_setup = RR.ServerNodeSetup("experimental.reynard_the_robot", 29200, node = self._node, argv=argv)
+        self._node_setup = RR.ServerNodeSetup("experimental.reynard_the_robot", 29200, node=self._node, argv=argv)
 
         self._ctx = self._node.RegisterService("reynard", "experimental.reynard_the_robot.Reynard", self._obj)
 
@@ -151,5 +152,3 @@ class ReynardRobotRaconteurService:
             print(f"    {conn}")
         print()
         print("Use the Robot Raconteur service browser to help find the service on a network. See: https://github.com/robotraconteur/RobotRaconteur_ServiceBrowser")
-
-

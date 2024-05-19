@@ -10,7 +10,7 @@ The default base URL is:
 http://localhost:29201/api
 ```
 
-The `localhost` and `29201` port may vary depending on the port specified to start the HTTP server or 
+The `localhost` and `29201` port may vary depending on the port specified to start the HTTP server or
 the IP address of the computer running the server.
 
 ## Endpoints
