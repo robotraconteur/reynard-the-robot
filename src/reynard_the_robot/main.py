@@ -10,7 +10,7 @@ import argparse
 def main():
 
     parser = argparse.ArgumentParser("reynard-the-robot")
-    parser.add_argument("--headless", action="store_true", help="Run Reynard in headless mode (no GUI)")
+    parser.add_argument("--gui", action="store_true", help="Run Reynard with QT GUI")
     parser.add_argument("--disable-robotraconteur", action="store_true", help="Disable Robot Raconteur service")
     parser.add_argument("--disable-ascii-socket", action="store_true", help="Disable ASCII socket server")
     parser.add_argument("--http-public", action="store_true", help="Use public IP for HTTP socket server")
@@ -45,8 +45,9 @@ def main():
             if not args.quiet:
                 rr_server.print_info()
                 print()
-        if not args.headless:
-            assert ReynardGui.gui_available(), "GUI not available. Use --headless to run in headless mode. Install pyside6 package to enable GUI."                
+        if args.gui:
+            if not ReynardGui.gui_available()
+                raise Exception("GUI not available. Do not use --gui argument and use external web browser. Install pyside6 Python package to enable GUI.")
             gui = ReynardGui()
             gui.run_gui()
         else:
