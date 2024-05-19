@@ -46,7 +46,7 @@ def main():
                 rr_server.print_info()
                 print()
         if args.gui:
-            if not ReynardGui.gui_available()
+            if not ReynardGui.gui_available():
                 raise Exception("GUI not available. Do not use --gui argument and use external web browser. Install pyside6 Python package to enable GUI.")
             gui = ReynardGui()
             gui.run_gui()
