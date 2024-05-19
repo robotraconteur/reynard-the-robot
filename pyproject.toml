@@ -1,7 +1,7 @@
 [project]
 
 name = "reynard-the-robot"
-version = "0.2.1"
+version = "0.2.2"
 description = "Reyndard the Robot Raconteur educational Robot"
 readme = "README.md"
 license = {file = "LICENSE.txt"}
