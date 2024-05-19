@@ -1,6 +1,6 @@
 ; !define VERSIONMAJOR 0
-; !define VERSIONMINOR 1
-; !define VERSIONBUILD 0
+; !define VERSIONMINOR 2
+; !define VERSIONBUILD 2
 
 !searchparse /file ../../pyproject.toml 'version = "' VERSIONMAJOR '.' VERSIONMINOR '.' VERSIONBUILD '"'
 
@@ -76,7 +76,7 @@ Section
 
     ; Create a shortcut named "Reynard the Robot" on the desktop
     CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"
-    CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\reynard-the-robot.exe"
+    CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\reynard-the-robot.exe" "--gui"
 
     ; Store installation folder
     WriteRegStr HKCU "Software\${COMPANYNAME}\${APPNAME}" "" $INSTDIR
