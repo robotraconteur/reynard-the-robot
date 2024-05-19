@@ -20,12 +20,12 @@ for users to begin using Robot Raconteur.
 
 <p align="center"><img src="docs/figures/reynard_the_robot.png"></p>
 
-The application is implemented as a simple Web application. A built in viewer based on PySide6 is used by
-default to view the workspace, but the application can be used in "headless" mode and accessed by any
-modern web browser.
-
-Open a web browser to `http://localhost:29201` to view the workspace if running headless. Replace
+The application is implemented as a simple Web application. By default the Reynard application runs a simple
+web server on port 29201. Open a web browser to `http://localhost:29201` to view the user interface. Replace
 `localhost` with the IP address of the computer running the application, and use the `--http-public` option.
+A simple GUI is also available that can be enabled by passing the `--gui` command line option. 
+The GUI is implemented using PySide6. The `pyside6` Python package must be installed to use the GUI.
+Install Reynard using the package `pip install reynard-the-robot[gui]` to install the GUI along with the application.
 
 By default, the Reynard Robot Raconteur service is available at `rr+tcp://localhost:29200/?service=reynard`.
 
@@ -53,47 +53,42 @@ Reynard the Robot is available as an installer for Windows. See
 https://github.com/robotraconteur/reynard-the-robot/releases for the current release. Download the appropriate file,
 and install as normal. These installers use the PySide6 based viewer. Shortcut icons are created
 under the "Robot Raconteur" group on Windows. Windows may raise security warnings. If these are a problem,
-use the `pip` method below.
+use the `pip` method below. By default the shortcut will start Reynard in GUI mode.
+
+*Note: Currently the Windows Installer will raise several security warnings. These are due to the installer not being
+signed. The software is safe to install. Future versions will be signed. If these warnings are a problem, use the `pip`
+method below.*
 
 If headless mode or other advanced
 options are required, use the `pip` method.
-
-### Mac OS
-
-The pyside6 based viewer is not currently working on Mac OS. Use the `--headless` mode an open
-a web browser to `http://localhost:29201`
-
-```
-python3 -m pip install --user reynard-the-robot
-```
-
-To run, use:
-
-```
-python3 -m reynard_the_robot --headless
-```
-
-Open a browser to http://localhost:29201
 
 ### Python Pip
 
 `reynard-the-robot` requires Python 3.8 or higher. Install using:
 
 ```
+python -m pip install --user reynard-the-robot
+```
+
+If the GUI is desired, install using:
+
+```
 python -m pip install --user reynard-the-robot[gui]
 ```
 
-On Linux, use:
+On Linux and Mac OS, use:
+
+```
+python3 -m pip install --user reynard-the-robot
+```
+
+If the GUI is desired, install using:
 
 ```
 python3 -m pip install --user reynard-the-robot[gui]
 ```
 
-If headless mode will be used, the `[gui]` option is not required:
-
-```
-python3 -m pip install --user reynard-the-robot
-```
+The GUI is not currently working on Mac OS.
 
 ## Usage
 
@@ -117,7 +112,7 @@ Available options:
 
 Here is the markdown documentation for the arguments:
 
-- `--headless` - Run Reynard in headless mode (no GUI)
+- `--gui` - Run Reynard with a GUI. Requires the `pyside6` package to be installed.
 - `--disable-robotraconteur` - Disable Robot Raconteur service
 - `--disable-ascii-socket` - Disable ASCII socket server
 - `--http-public` - Use public IP for HTTP socket server. If omitted, only localhost connections are accepted
