@@ -1,6 +1,6 @@
 # ASCII Socket Reference
 
-Reynard the Robot provides an ASCII socket interface. The ASCII socket interface is a simple text-based interface that 
+Reynard the Robot provides an ASCII socket interface. The ASCII socket interface is a simple text-based interface that
 can be used to communicate with Reynard the Robot. ASCII interfaces are commonly found on industrial devices,
 using both sockets and serial ports. The Reynard interface is designed to be representative of real devices that
 use ASCII interfaces.

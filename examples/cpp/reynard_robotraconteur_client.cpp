@@ -15,25 +15,26 @@ int main(int argc, char* argv[])
 
     // Connect to the service
     std::string url = "rr+tcp://localhost:29200/?service=reynard";
-    auto reynard = RR::rr_cast<experimental::reynard_the_robot::Reynard>(RR::RobotRaconteurNode::s()->ConnectService(url));
+    auto reynard =
+        RR::rr_cast<experimental::reynard_the_robot::Reynard>(RR::RobotRaconteurNode::s()->ConnectService(url));
 
     // Teleport the robot
     reynard->teleport(0.1, -0.2);
 
     // Drive the robot with no timeout
-    reynard->drive_robot(0.5, -0.2, -1, false);    
+    reynard->drive_robot(0.5, -0.2, -1, false);
 
     // Wait for 1 second
     RR::RobotRaconteurNode::s()->Sleep(boost::posix_time::milliseconds(1000));
 
     // Stop the robot
-    reynard->drive_robot(0, 0, -1, false);  
+    reynard->drive_robot(0, 0, -1, false);
 
     // Set the arm position
-    reynard->setf_arm_position(100.0*(M_PI/180.0), -30.0*(M_PI/180.0), -70.0*(M_PI/180.0));
+    reynard->setf_arm_position(100.0 * (M_PI / 180.0), -30.0 * (M_PI / 180.0), -70.0 * (M_PI / 180.0));
 
     // Drive the arm using timeout and wait
-    reynard->drive_arm(10.0*(M_PI/180.0), -30.0*(M_PI/180.0), -15.0*(M_PI/180.0), 1.5, true);
+    reynard->drive_arm(10.0 * (M_PI / 180.0), -30.0 * (M_PI / 180.0), -15.0 * (M_PI / 180.0), 1.5, true);
 
     // Set the color to red
     double red_color[] = {1.0, 0.0, 0.0};

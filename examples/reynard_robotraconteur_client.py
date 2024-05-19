@@ -5,8 +5,10 @@ import numpy as np
 # Connect to the Reynard service using a URL
 c = RRN.ConnectService('rr+tcp://localhost:29200?service=reynard')
 
+
 def new_message(msg):
     print(f"New message: {msg}")
+
 
 # Connect a callback function to listen for new messages
 c.new_message += new_message
@@ -16,10 +18,10 @@ state, _ = c.state.PeekInValue()
 print(state)
 
 # Teleport the robot
-c.teleport(0.1,-0.2)
+c.teleport(0.1, -0.2)
 
 # Drive the robot with no timeout
-c.drive_robot(0.5,-0.2, -1, False)
+c.drive_robot(0.5, -0.2, -1, False)
 
 # Wait for one second
 time.sleep(1)

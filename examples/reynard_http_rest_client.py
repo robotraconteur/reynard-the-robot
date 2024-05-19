@@ -48,5 +48,3 @@ requests.post(base_url + "/say", json={"message": "Hello, World From HTTP!"}).ra
 # Read message queue
 response = requests.get(base_url + "/messages")
 print(response.json())
-
-

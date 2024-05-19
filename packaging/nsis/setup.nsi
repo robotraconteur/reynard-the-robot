@@ -72,7 +72,7 @@ Section
     SetOutPath $INSTDIR
 
     ; Include dist files
-    File /r "..\..\dist\reynard-the-robot\*"    
+    File /r "..\..\dist\reynard-the-robot\*"
 
     ; Create a shortcut named "Reynard the Robot" on the desktop
     CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"

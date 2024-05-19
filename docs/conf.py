@@ -21,16 +21,15 @@ import reynard_the_robot
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-     "sphinx.ext.autodoc",
-     "sphinx_autodoc_typehints",
-     "recommonmark"
+    "sphinx.ext.autodoc",
+    "sphinx_autodoc_typehints",
+    "recommonmark"
 ]
 
 source_suffix = [".rst", ".md"]
 
 templates_path = ['_templates']
 exclude_patterns = []
-
 
 
 # -- Options for HTML output -------------------------------------------------

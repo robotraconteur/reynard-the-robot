@@ -2,8 +2,8 @@
 
 Reynard the Robot has packages available for both ROS 1 and ROS 2. The packages for ROS 1 and ROS 2 provide
 identical functionality, but are designed for use with the respective ROS versions. Both the ROS 1 and ROS 2
-versions provide two packages, `reynard_the_robot_ros_msgs` for the message definitions, and 
-`reynard_the_robot_ros` for the ROS node and example client. The ROS source code are available in the following 
+versions provide two packages, `reynard_the_robot_ros_msgs` for the message definitions, and
+`reynard_the_robot_ros` for the ROS node and example client. The ROS source code are available in the following
 repositories:
 
 - ROS 1: https://github.com/johnwason/reynard_the_robot_ros
@@ -120,7 +120,7 @@ Response:
 
 ## reynard_the_robot_ros
 
-The `reynard_the_robot_ros` package provides a ROS node for Reynard the Robot. The following topics 
+The `reynard_the_robot_ros` package provides a ROS node for Reynard the Robot. The following topics
 and services are provided:
 
 ### Publishers

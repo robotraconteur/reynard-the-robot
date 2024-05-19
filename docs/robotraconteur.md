@@ -28,7 +28,7 @@ The `ReynardState` struct contains the current state of Reynard.
 
 - `field double[] arm_velocity`
 
-    The current velocity of the robot arm joints in radians per second. The velocity is given as a 3 
+    The current velocity of the robot arm joints in radians per second. The velocity is given as a 3
     element array `[vel_q1, vel_q2, vel_q3]`.
 
 ## Object `Reynard`
@@ -50,14 +50,14 @@ The `Reynard` object provides members to interact with Reynard.
 
 - `function void teleport(double x, double y)`
 
-    Instantaneously move the robot body to the specified position in meters.     
+    Instantaneously move the robot body to the specified position in meters.
     - `x`: The x position in meters
     - `y`: The y position in meters
 
 - `function double[] getf_arm_position()`
 
     Get the robot arm joints to the specified position in radians.
-    
+
     - Returns: The arm joint angles as a 3 element array `[q1, q2, q3]` in radians.
 
 - `function void drive_robot(double vel_x, double vel_y, double timeout, bool wait)`

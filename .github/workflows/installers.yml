@@ -1,33 +1,33 @@
 name: installers
 
 on:
-  push:    
+  push:
   pull_request:
   release:
 
 jobs:
-    windows:
-        runs-on: windows-latest
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-        - name: Install NSIS
-          run: choco install nsis -y
-        - name: pip install
-          run: |
-            pip install .[gui]
-            pip install pyinstaller wheel setuptools build
-        - name: pyinstaller
-          run: pyinstaller --noconfirm reynard-the-robot.spec
-        - name: build wheel
-          run: python -m build
-        - name: Build Installer
-          working-directory: ./packaging/nsis
-          run: makensis setup.nsi
-        - name: upload
-          uses: actions/upload-artifact@v2
-          with:
-            name: windows-files
-            path: |
-             ./dist/*.whl
-             ./packaging/nsis/*.exe
+  windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install NSIS
+      run: choco install nsis -y
+    - name: pip install
+      run: |
+        pip install .[gui]
+        pip install pyinstaller wheel setuptools build
+    - name: pyinstaller
+      run: pyinstaller --noconfirm reynard-the-robot.spec
+    - name: build wheel
+      run: python -m build
+    - name: Build Installer
+      working-directory: ./packaging/nsis
+      run: makensis setup.nsi
+    - name: upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows-files
+        path: |
+          ./dist/*.whl
+          ./packaging/nsis/*.exe

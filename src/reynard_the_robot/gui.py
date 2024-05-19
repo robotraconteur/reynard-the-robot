@@ -21,7 +21,7 @@ if _gui_available:
             self.setWindowTitle("Reynard the Robot")
             icon_path = str(importlib_resources.files(__package__) / 'web_static' / 'rricon.ico')
             self.icon = QIcon(icon_path)
-            self.setWindowIcon(self.icon)  
+            self.setWindowIcon(self.icon)
 
             self.layout = QVBoxLayout(self)
 
@@ -34,7 +34,7 @@ if _gui_available:
             self.layout.addWidget(self.webV)
 
             screen_geometry = QApplication.primaryScreen().availableGeometry()
-            self.resize(min(1040,screen_geometry.width()),min(890,screen_geometry.width()))
+            self.resize(min(1040, screen_geometry.width()), min(890, screen_geometry.width()))
 
 
 class ReynardGui:
@@ -43,13 +43,13 @@ class ReynardGui:
 
     @staticmethod
     def gui_available():
-        return _gui_available        
+        return _gui_available
 
     def run_gui(self):
         app = QApplication([])
         icon_path = str(importlib_resources.files(__package__) / 'web_static' / 'rricon.ico')
         icon = QIcon(icon_path)
-        app.setWindowIcon(icon)  
+        app.setWindowIcon(icon)
 
         web = _webView()
         web.show()

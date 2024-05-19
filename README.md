@@ -23,7 +23,7 @@ for users to begin using Robot Raconteur.
 The application is implemented as a simple Web application. By default the Reynard application runs a simple
 web server on port 29201. Open a web browser to `http://localhost:29201` to view the user interface. Replace
 `localhost` with the IP address of the computer running the application, and use the `--http-public` option.
-A simple GUI is also available that can be enabled by passing the `--gui` command line option. 
+A simple GUI is also available that can be enabled by passing the `--gui` command line option.
 The GUI is implemented using PySide6. The `pyside6` Python package must be installed to use the GUI.
 Install Reynard using the package `pip install reynard-the-robot[gui]` to install the GUI along with the application.
 
@@ -42,14 +42,14 @@ the following software programming interfaces:
 These interfaces are designed to be representative of real devices. Robot Raconteur drivers communicates with
 the device using one of these (or similar) interfaces, and provides a Robot Raconteur service.
 
-The ROS 1 and ROS 2 interfaces require external packages to operate. See 
+The ROS 1 and ROS 2 interfaces require external packages to operate. See
 https://github.com/johnwason/reynard_the_robot_ros and https://github.com/johnwason/reynard_the_robot_ros2
 
 ## Installation
 
 ### Installer for Windows
 
-Reynard the Robot is available as an installer for Windows. See 
+Reynard the Robot is available as an installer for Windows. See
 https://github.com/robotraconteur/reynard-the-robot/releases for the current release. Download the appropriate file,
 and install as normal. These installers use the PySide6 based viewer. Shortcut icons are created
 under the "Robot Raconteur" group on Windows. Windows may raise security warnings. If these are a problem,
@@ -121,7 +121,7 @@ Here is the markdown documentation for the arguments:
 - `--ascii-socket-port=` - Port for ASCII socket server. Default value is 29202
 - `--quiet` - Suppress output
 
-Standard Robot Raconteur command line options can also be used. See 
+Standard Robot Raconteur command line options can also be used. See
 https://github.com/robotraconteur/robotraconteur/wiki/Command-Line-Options
 
 
@@ -135,7 +135,7 @@ Multiple client interfaces are provided. See the following pages for more inform
 - Raw ASCII Socket [docs/socket.md](docs/socket.md)
 - ROS 1 and ROS 2 [docs/ros.md](docs/ros.md)
 
-Note that the ROS 1 and ROS 2 interfaces require external packages to operate. See [docs/ros.md](docs/ros.md) 
+Note that the ROS 1 and ROS 2 interfaces require external packages to operate. See [docs/ros.md](docs/ros.md)
 for more information.
 
 ## Client Examples
