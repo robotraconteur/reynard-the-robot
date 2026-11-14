@@ -77,6 +77,10 @@ The `Reynard` object provides members to interact with Reynard.
     - `timeout`: The timeout in seconds. If the timeout is reached, the robot will stop. Set to -1 to drive indefinitely.
     - `wait`: If true, the function will block until the timeout is reached.
 
+- `function void stop()`
+
+    Stop the robot body and arm at once, ending any `drive_robot` or `drive_arm`.
+
 - `function void say(string message)`
 
     Make Reynard say the specified message.

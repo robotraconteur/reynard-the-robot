@@ -57,6 +57,9 @@ object Reynard
     ## If wait is true, returns after timeout.
     function void drive_arm(double q1, double q2, double q3, double timeout, bool wait)
 
+    ## Stop the base and the arm at once, ending any drive_robot or drive_arm
+    function void stop()
+
     ## Show a speech bubble with the message in the GUI
     function void say(string message)
 

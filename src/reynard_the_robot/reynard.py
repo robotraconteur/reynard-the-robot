@@ -39,6 +39,7 @@ class Reynard:
     - drive_robot: Drive Reynard's base in the x and y directions at a given velocity
     - set_arm_position: Set the position of Reynard's arm joints instantly
     - drive_arm: Drive Reynard's arm joints at a given velocity
+    - stop: Stop the base and the arm at once
     - arm_position: Get the current position of Reynard's arm joints
     - robot_position: Get the current position of Reynard's base
     - robot_velocity: Get the current velocity of Reynard's base
@@ -223,6 +224,17 @@ class Reynard:
         if wait:
             await asyncio.sleep(timeout)
 
+    async def aio_stop(self):
+        """
+        AIO version of stop. Stop Reynard's base and arm at once, ending any drive.
+        Use with await in an async function.
+        """
+        async with self.aio_lock:
+            self._vel = np.array([0, 0], dtype=np.float64)
+            self._vel_stop_time = -1
+            self._q_vel = np.array([0, 0, 0], dtype=np.float64)
+            self._q_vel_stop_time = -1
+
     async def aio_set_color(self, r, g, b):
         """
         "AIO version of property set color. Set the color of Reynard's body as an RGB tuple between 0 and 1.
@@ -334,6 +346,12 @@ class Reynard:
                         Default is False.
         """
         asyncio.run_coroutine_threadsafe(self.aio_drive_arm(q1, q2, q3, timeout, wait), self._loop).result()
+
+    def stop(self):
+        """
+        Stop Reynard's base and arm at once, ending any drive.
+        """
+        asyncio.run_coroutine_threadsafe(self.aio_stop(), self._loop).result()
 
     @property
     def arm_position(self):
@@ -477,6 +495,11 @@ class Reynard:
             await self.aio_set_arm_position(q1, q2, q3)
             return web.Response()
 
+        async def api_post_stop(request):
+            await self.aio_stop()
+            return web.Response()
+
+        self.app.router.add_post('/api/stop', api_post_stop)
         self.app.router.add_get('/api/messages', api_get_messages)
         self.app.router.add_post('/api/teleport', api_post_teleport)
         self.app.router.add_post('/api/say', api_post_say)

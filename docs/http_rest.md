@@ -156,6 +156,32 @@ Example Request:
 curl -X POST http://localhost:29201/api/drive_arm -d '{ "q1": 10, "q2": -30, "q3": -15}'
 ```
 
+### Stop
+
+```
+POST /stop
+```
+
+#### Description
+
+Stop Reynard's body and arm at once, ending any drive.
+
+#### Parameters
+
+None
+
+#### Response
+
+None
+
+#### Example
+
+Example Request:
+
+```bash
+curl -X POST http://localhost:29201/api/stop
+```
+
 #### Get the Color
 
 ```

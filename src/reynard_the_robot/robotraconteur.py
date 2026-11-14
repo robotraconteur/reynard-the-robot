@@ -62,6 +62,9 @@ object Reynard
     ## If wait is true, returns after timeout.
     function void drive_arm(double q1, double q2, double q3, double timeout, bool wait)
 
+    ## Stop the base and the arm at once, ending any drive_robot or drive_arm
+    function void stop()
+
     ## Show a speech bubble with the message in the GUI
     function void say(string message)
 
@@ -148,6 +151,9 @@ class ReynardImpl:
         q3_1 = np.rad2deg(q3)
 
         self._reynard.drive_arm(q1_1, q2_1, q3_1, timeout, wait)
+
+    def stop(self):
+        self._reynard.stop()
 
     def say(self, message):
         self._reynard.say(message)

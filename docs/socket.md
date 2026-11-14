@@ -132,6 +132,16 @@ Example:
 DRIVEARM 10 -30 -15
 ```
 
+### STOP
+
+The `STOP` command stops Reynard's body and arm at once, ending any `DRIVE` or `DRIVEARM`.
+
+```
+STOP
+```
+
+Returns `OK` if successful.
+
 ### GETCOLOR
 
 The `GETCOLOR` command is used to get the Reynard's current color.

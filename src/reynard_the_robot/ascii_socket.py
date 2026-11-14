@@ -81,6 +81,10 @@ class ReynardAsciiSocketConnection:
                         wait = bool(s1[5])
                     self._reynard.drive_arm(q1, q2, q3, timeout, wait)
                     ret = "OK\n"
+                elif s1[0] == "STOP":
+                    assert len(s1) == 1
+                    self._reynard.stop()
+                    ret = "OK\n"
                 elif s1[0] == "STATE":
                     assert len(s1) == 1
                     t = self._reynard.time
